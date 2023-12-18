@@ -84,7 +84,7 @@ public class Processing implements ActionListener{
 								g.drawImage(i, 0, 0, i.getWidth(null), i.getHeight(null), null);
 								
 								
-								g.setColor(new Color(Start.getRValue(), Start.getBValue(), Start.getGValue()));
+								g.setColor(new Color(Start.getRValue(), Start.getGValue(), Start.getBValue()));
 								g.setFont(font); 
 								g.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
 								
