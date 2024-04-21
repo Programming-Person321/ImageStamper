@@ -16,54 +16,28 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 import javax.imageio.ImageIO;
-import javax.swing.JFileChooser;
-import javax.swing.filechooser.FileNameExtensionFilter;
+import javax.swing.JOptionPane;
 
 public class Processing implements ActionListener{
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
-		JFileChooser chooser = new JFileChooser();
-		chooser.setDialogTitle("Base Image");
-		FileNameExtensionFilter filter = new FileNameExtensionFilter("Image Files", "jpg", "jpeg", "png", "gif", "bmp");
-		chooser.setFileFilter(filter);
-		
-		int returnVal = chooser.showOpenDialog(null);
-		if(returnVal == JFileChooser.APPROVE_OPTION) {
-			String path = chooser.getSelectedFile().getPath();
+
+			String path = Start.getImagePath();
 			System.out.println("Selected File: " + path);
 			
 			try {
 				
-				JFileChooser c = new JFileChooser();
-				c.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-				c.setAcceptAllFileFilterUsed(false);
-				c.setDialogTitle("Output Folder");
-				int r = c.showOpenDialog(null);
-				if(r == JFileChooser.APPROVE_OPTION) {
+
 					ArrayList<String> names = new ArrayList<String>();
 
-					JFileChooser c2 = new JFileChooser();
-					c2.setDialogTitle("Text");
-					FileNameExtensionFilter f2 = new FileNameExtensionFilter("text files", "txt");
-					c2.setFileFilter(f2);
 
-					int e3 = c2.showOpenDialog(null);
-					if(e3 == JFileChooser.APPROVE_OPTION) {
-						Scanner scam = new Scanner(new File(c2.getSelectedFile().getPath()));
+						Scanner scam = new Scanner(new File(Start.getNamesPath()));
 						while(scam.hasNextLine()) {
 							String line = scam.nextLine();
 							names.add(line);
 						}
-						
-						JFileChooser c4 = new JFileChooser();
-						FileNameExtensionFilter f4 = new FileNameExtensionFilter("font files", "ttf");
-						c4.setDialogTitle("Font");
-						c4.setFileFilter(f4);
-
-						int e4 = c4.showOpenDialog(null);
-						if(e4 == JFileChooser.APPROVE_OPTION) {
 							
-							InputStream myStream = new BufferedInputStream(new FileInputStream(c4.getSelectedFile().getPath()));
+							InputStream myStream = new BufferedInputStream(new FileInputStream(Start.getFontPath()));
 			                Font ttfBase = Font.createFont(Font.TRUETYPE_FONT, myStream);
 			                Font font = ttfBase.deriveFont(Font.PLAIN, Start.getFontSize());
 			                
@@ -95,20 +69,21 @@ public class Processing implements ActionListener{
 							    g.setFont(font);	    
 								g.drawString(names.get(in), x+Start.getxValue(), y+Start.getyValue());
 								
-								File file = new File(c.getSelectedFile().getPath() + "//" + names.get(in) + ".png");
+								File file = new File(Start.getOutputPath() + "//" + names.get(in) + ".png");
 								ImageIO.write(image, "png", file);
 							}
-						}
+						
 
 						scam.close();
-					}
-				}
+					
+				
 				
 				System.out.println("Status: Done");
 			}catch(Exception e) {
 				e.printStackTrace();
+				JOptionPane error = new JOptionPane(e.getMessage());
+				JOptionPane.showMessageDialog(null, error, "Error", JOptionPane.ERROR_MESSAGE);
 			}
-		}
-		
-	}
+
+}
 }
