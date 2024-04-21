@@ -99,6 +99,8 @@ public class Processing implements ActionListener{
 								ImageIO.write(image, "png", file);
 							}
 						}
+
+						scam.close();
 					}
 				}
 				
