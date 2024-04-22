@@ -2,7 +2,5 @@
     "java.project.sourcePaths": [
         "ImageStamper/src"
     ],
-    "java.project.referencedLibraries": [
-        "ImageStamper.jar"
-    ]
+    "java.project.referencedLibraries": []
 }
